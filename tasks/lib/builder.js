@@ -205,8 +205,8 @@ exports.init = function(grunt) {
    * Returns the command to be run
    *
    */
-  var command = function() {
-    return path.normalize(config.bin);
+  var command = function(cwd) {
+    return (cwd ? 'cd ' + cwd + ' && ': '') + path.normalize(config.bin);
   };
 
   /**
@@ -223,11 +223,10 @@ exports.init = function(grunt) {
    *
    * @param Object runner
    */
-  exports.build = function(dir, options) {
+  exports.build = function(dir, cwd, options) {
     directory = dir ? path.normalize(dir) : '';
     config    = options(defaults);
-
-    return command() + ' ' + buildOptions() + ' ' + directory;
+    return command(cwd) + ' ' + buildOptions() + ' ' + directory;
   };
 
   /**

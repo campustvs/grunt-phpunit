@@ -17,11 +17,13 @@ module.exports = function(grunt) {
   grunt.registerMultiTask( 'phpunit', 'Run phpunit', function() {
 
     var directory = this.data.dir || '';
+    var cwd = this.data.cwd;
 
     delete this.data.dir;
+    delete this.data.cwd;
     var options = this.options(this.data);
 
-    var command = builder.build(directory, function(config) {
+    var command = builder.build(directory, cwd, function(config) {
       // Merge task options with global options
       Object.keys(options).forEach(function(key) {
         config[key] = options[key];
